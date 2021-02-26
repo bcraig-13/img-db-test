@@ -10,7 +10,7 @@ var path = require("path");
 require("dotenv/config");
 
 //V===Change the value of MONGO_URL in .env to this? Will it upload to mongodb instead of localhost?===V
-// mongodb+srv://Raven13:Teddykat#3@cluster0.v8sgr.mongodb.net/mongoDBImgTest?retryWrites=true&w=majority
+// mongodb+srv://bcraig-13:Teddykat#3@cluster0.v8sgr.mongodb.net/mongoDBImg?retryWrites=true&w=majority
 //V===Original tutorial connection to localhost===V
 // mongodb://localhost/imagesInMongoApp
 // PORT=3000
@@ -18,7 +18,8 @@ require("dotenv/config");
 // Step 2 - connect to the database
 //V===Maybe remove .env file and set MONGO_URL var at top of app.js?===V
 mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true }, (err) => {
-  console.log("connected");
+  console.log(err);
+
 });
 
 // Step 3 - code was added to ./models.js
@@ -57,7 +58,8 @@ app.get("/", (req, res) => {
   imgModel.find({}, (err, items) => {
     if (err) {
       console.log(err);
-      res.status(500).send("An error occurred", err);
+      // res.status(500).send("An error occurred", err);
+      res.render("imagesPage", { items: [] });
     } else {
       res.render("imagesPage", { items: items });
     }
