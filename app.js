@@ -9,9 +9,14 @@ var fs = require("fs");
 var path = require("path");
 require("dotenv/config");
 
+//V===Change the value of MONGO_URL in .env to this? Will it upload to mongodb instead of localhost?===V
 // mongodb+srv://Raven13:Teddykat#3@cluster0.v8sgr.mongodb.net/mongoDBImgTest?retryWrites=true&w=majority
-// Step 2 - connect to the database
+//V===Original tutorial connection to localhost===V
+// mongodb://localhost/imagesInMongoApp
+// PORT=3000
 
+// Step 2 - connect to the database
+//V===Maybe remove .env file and set MONGO_URL var at top of app.js?===V
 mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true }, (err) => {
   console.log("connected");
 });
@@ -23,6 +28,7 @@ mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopol
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+//V===Can use react instead. Have to change all of the <% "" %> vars in imagesPage.ejs and use a component instead===V
 // Set EJS as templating engine
 app.set("view engine", "ejs");
 
@@ -46,7 +52,7 @@ var upload = multer({ storage: storage });
 var imgModel = require("./model");
 
 // Step 7 - the GET request handler that provides the HTML UI
-
+//V===Change the routes to respective routes in our app. It should work the same===V
 app.get("/", (req, res) => {
   imgModel.find({}, (err, items) => {
     if (err) {
@@ -59,7 +65,7 @@ app.get("/", (req, res) => {
 });
 
 // Step 8 - the POST handler for processing the uploaded file
-
+//V===Our schema would just need a name and img===V
 app.post("/", upload.single("image"), (req, res, next) => {
   var obj = {
     name: req.body.name,
